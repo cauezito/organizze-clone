@@ -10,5 +10,9 @@
     <string name="alertas">Receba alertas quando quiser</string>
     <string name="tudo_organizado">Tudo organizado, no celular ou computador</string>
     <string name="use_no_smartphone">Use no seu smartphone e acessando o Organizze pelo site</string>
+    <string name="crie_sua_conta">Crie sua conta grátis</string>
+    <string name="junte_se">Junte-se a mais de meio milhão de pessoas\n e comece já</string>
+    <string name="btn_cadastre">CADASTRE-SE</string>
+    <string name="btn_jah_tenho_conta">Já tenho conta</string>
 
 </resources>
