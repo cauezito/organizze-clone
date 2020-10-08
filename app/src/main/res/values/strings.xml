@@ -15,4 +15,12 @@
     <string name="btn_cadastre">CADASTRE-SE</string>
     <string name="btn_jah_tenho_conta">Já tenho conta</string>
 
+    <!-- CADASTRO -->
+    <string name="cadastrar">Cadastrar</string>
+    <string name="termos_de_uso">Termos de uso</string>
+
+    <!-- LOGIN -->
+    <string name="acesse_sua_conta">Acesse sua conta</string>
+    <string name="entrar">Entrar</string>
+
 </resources>
