@@ -2,13 +2,11 @@ package br.com.cauezito.app.organizze.firebase.usuario;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -17,7 +15,7 @@ import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 
-import br.com.cauezito.app.organizze.activity.CadastroActivity;
+import br.com.cauezito.app.organizze.activity.HomeActivity;
 import br.com.cauezito.app.organizze.activity.LoginActivity;
 import br.com.cauezito.app.organizze.firebase.config.FirebaseConfig;
 import br.com.cauezito.app.organizze.model.Usuario;
@@ -39,7 +37,7 @@ public class FirebaseUsuario {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
                             Toast.makeText(activity, "Cadastro realizado com sucesso! :)", Toast.LENGTH_LONG).show();
-                            activity.startActivity(new Intent(activity, LoginActivity.class));
+                            irParaHome();
                         } else {
                             String excecao = "";
                             try {
@@ -67,9 +65,7 @@ public class FirebaseUsuario {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            //Redireciona para home
-
-                            Log.i("AUTENTICACAO", "Usuário autenticado");
+                            irParaHome();
                         }else{
                             String excecao = "";
                             try{
@@ -87,6 +83,21 @@ public class FirebaseUsuario {
                         }
                     }
                 });
+    }
+
+    private void irParaHome() {
+        activity.startActivity(new Intent(activity, HomeActivity.class));
+        activity.finish();
+    }
+
+    public void verificaUsuarioLogado(){
+        if(autenticacao.getCurrentUser() != null){
+            irParaHome();
+        }
+    }
+
+    public void deslogaUsuario(){
+        autenticacao.signOut();
     }
 
 }
