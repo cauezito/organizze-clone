@@ -1,6 +1,4 @@
-package br.com.cauezito.app.activity;
-
-import androidx.appcompat.app.AppCompatActivity;
+package br.com.cauezito.app.organizze.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
