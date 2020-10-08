@@ -24,8 +24,8 @@ public class CadastroActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
 
-        etEmail = findViewById(R.id.etEmail);
-        etSenha = findViewById(R.id.etSenha);
+        etEmail = findViewById(R.id.etEmailLogin);
+        etSenha = findViewById(R.id.etSenhaLogin);
         etNome = findViewById(R.id.etNome);
         btCadastrar = findViewById(R.id.btCadastrar);
 
@@ -43,8 +43,7 @@ public class CadastroActivity extends AppCompatActivity {
                     usuario.setEmail(email);
 
                     firebaseUsuario = new FirebaseUsuario(CadastroActivity.this);
-                    firebaseUsuario.cadastrarUsuario(usuario.getEmail(), usuario.getSenha());
-
+                    firebaseUsuario.cadastraUsuario(usuario);
                 }
             }
         });

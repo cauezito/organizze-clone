@@ -2,6 +2,7 @@ package br.com.cauezito.app.organizze.firebase.usuario;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,6 +19,7 @@ import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import br.com.cauezito.app.organizze.activity.CadastroActivity;
 import br.com.cauezito.app.organizze.activity.LoginActivity;
 import br.com.cauezito.app.organizze.firebase.config.FirebaseConfig;
+import br.com.cauezito.app.organizze.model.Usuario;
 
 public class FirebaseUsuario {
     private FirebaseAuth autenticacao;
@@ -28,9 +30,9 @@ public class FirebaseUsuario {
          this.activity = activity;
     }
 
-    public void cadastrarUsuario(String email, String senha){
+    public void cadastraUsuario(Usuario usuario){
 
-        autenticacao.createUserWithEmailAndPassword(email, senha).addOnCompleteListener(activity,
+        autenticacao.createUserWithEmailAndPassword(usuario.getEmail(), usuario.getSenha()).addOnCompleteListener(activity,
                 new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -57,4 +59,21 @@ public class FirebaseUsuario {
                     }
                 });
     }
+
+    public void autenticaUsuario(Usuario usuario){
+        autenticacao.signInWithEmailAndPassword(usuario.getEmail(), usuario.getSenha())
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful()){
+                            //Redireciona para home
+
+                            Log.i("AUTENTICACAO", "Usuário autenticado");
+                        }else{
+                            Toast.makeText(activity, "Dados inválidos", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+    }
+
 }

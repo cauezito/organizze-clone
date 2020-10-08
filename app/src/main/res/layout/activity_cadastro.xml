@@ -7,7 +7,7 @@
     tools:context=".organizze.activity.CadastroActivity">
 
     <EditText
-        android:id="@+id/etSenha"
+        android:id="@+id/etSenhaLogin"
         android:layout_width="302dp"
         android:layout_height="0dp"
         android:layout_marginTop="24dp"
@@ -19,10 +19,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etEmail" />
+        app:layout_constraintTop_toBottomOf="@+id/etEmailLogin" />
 
     <EditText
-        android:id="@+id/etEmail"
+        android:id="@+id/etEmailLogin"
         android:layout_width="302dp"
         android:layout_height="0dp"
         android:layout_marginTop="24dp"
@@ -86,7 +86,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etSenha" />
+        app:layout_constraintTop_toBottomOf="@+id/etSenhaLogin" />
 
     <TextView
         android:id="@+id/textView6"
