@@ -13,6 +13,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 
@@ -70,7 +71,19 @@ public class FirebaseUsuario {
 
                             Log.i("AUTENTICACAO", "Usuário autenticado");
                         }else{
-                            Toast.makeText(activity, "Dados inválidos", Toast.LENGTH_LONG).show();
+                            String excecao = "";
+                            try{
+                                throw task.getException();
+                            } catch (FirebaseAuthInvalidUserException e){
+                                excecao = "Essa conta não existe";
+                            } catch (FirebaseAuthInvalidCredentialsException e){
+                                excecao = "O e-mail e a senha não correspondem";
+                            } catch (Exception e){
+                                excecao = "Erro ao autenticar usuário: " + e.getMessage();
+                                e.printStackTrace();
+                            }
+
+                            Toast.makeText(activity, excecao, Toast.LENGTH_LONG).show();
                         }
                     }
                 });
