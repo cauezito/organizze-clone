@@ -10,4 +10,7 @@
 
     <!-- ENTRADAS -->
     <color name="colorToolbarEntrada">#2A8F1A</color>
+
+    <!-- DESPESAS -->
+    <color name="colorToolbarDespesa">#E43939</color>
 </resources>
