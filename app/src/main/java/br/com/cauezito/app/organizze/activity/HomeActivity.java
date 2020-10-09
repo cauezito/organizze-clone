@@ -1,6 +1,7 @@
 package br.com.cauezito.app.organizze.activity;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.github.clans.fab.FloatingActionButton;
@@ -12,6 +13,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.view.View;
 
+import br.com.cauezito.app.DespesaActivity;
 import br.com.cauezito.app.R;
 
 public class HomeActivity extends AppCompatActivity {
@@ -24,17 +26,14 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+    }
 
-        fam = findViewById(R.id.fam);
+    public void adicionaDespesa(View view){
+        startActivity(new Intent(this, DespesaActivity.class));
+    }
 
-
-        fam.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+    public void adicionaEntrada(View view){
+        startActivity(new Intent(this, EntradaActivity.class));
     }
 
 

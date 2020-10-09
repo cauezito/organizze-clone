@@ -7,4 +7,7 @@
     <!-- FAB -->
     <color name="colorPrimaryDespesa">#B2B9D6</color>
     <color name="colorPrimaryEntrada">#B2B9D6</color>
+
+    <!-- ENTRADAS -->
+    <color name="colorToolbarEntrada">#2A8F1A</color>
 </resources>

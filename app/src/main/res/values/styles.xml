@@ -1,10 +1,25 @@
 <resources>
-    <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+
+    <style name="EntradaTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorToolbarEntrada</item>
+        <item name="colorPrimaryDark">@color/colorToolbarEntrada</item>
+        <item name="colorAccent">#89F486</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="DespesaTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">#FF5252</item>
+        <item name="colorPrimaryDark">#E43939</item>
+        <item name="colorAccent">#E37171</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
