@@ -16,7 +16,6 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 
 import br.com.cauezito.app.organizze.activity.HomeActivity;
-import br.com.cauezito.app.organizze.activity.LoginActivity;
 import br.com.cauezito.app.organizze.firebase.config.FirebaseConfig;
 import br.com.cauezito.app.organizze.model.Usuario;
 import br.com.cauezito.app.organizze.utils.Base64Custom;

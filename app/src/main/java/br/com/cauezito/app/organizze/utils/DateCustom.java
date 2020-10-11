@@ -9,4 +9,9 @@ public class DateCustom {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         return simpleDateFormat.format(data);
     }
+
+    public static String formataDataMesAno(String data){
+        String dataFormatada[] = data.split("/");
+        return dataFormatada[1] + dataFormatada[2];
+    }
 }
