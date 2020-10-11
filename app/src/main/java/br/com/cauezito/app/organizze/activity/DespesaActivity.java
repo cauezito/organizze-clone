@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import br.com.cauezito.app.R;
 import br.com.cauezito.app.organizze.firebase.movimentacao.despesa.GerenciaDespesa;
@@ -35,15 +36,18 @@ public class DespesaActivity extends AppCompatActivity {
     public void salvaDespesa(View view){
         gerenciaDespesa = new GerenciaDespesa(DespesaActivity.this);
 
-        movimentacao = new Movimentacao();
-        movimentacao.setValor(Double.parseDouble(etValorDespesa.getText().toString()));
-        movimentacao.setCategoria(etCategoriaDespesa.getText().toString());
-        movimentacao.setDescricao(etDescricaoDespesa.getText().toString());
-        movimentacao.setData(etData.getText().toString());
-        movimentacao.setTipo(TipoEnum.D.getTipo());
+        try {
+            movimentacao = new Movimentacao();
+            movimentacao.setValor(Double.parseDouble(etValorDespesa.getText().toString()));
+            movimentacao.setCategoria(etCategoriaDespesa.getText().toString());
+            movimentacao.setDescricao(etDescricaoDespesa.getText().toString());
+            movimentacao.setData(etData.getText().toString());
+            movimentacao.setTipo(TipoEnum.D.getTipo());
+            gerenciaDespesa.salvaDespesa(movimentacao);
+        } catch (NumberFormatException | NullPointerException e){
+            Toast.makeText(this, "Digite valores válidos", Toast.LENGTH_LONG).show();
+        }
 
-        validaCampos(movimentacao);
-        //if(validaCampos(movimentacao)) gerenciaDespesa.salvaDespesa(movimentacao);
     }
 
     public static void limpaCampos(){
@@ -52,11 +56,4 @@ public class DespesaActivity extends AppCompatActivity {
         etDescricaoDespesa.setText("");
     }
 
-    private void validaCampos(Movimentacao movimentacao){
-        if(movimentacao.getValor().equals("")){
-            //asasas
-        }else {
-            //aasasa
-        }
-    }
 }
