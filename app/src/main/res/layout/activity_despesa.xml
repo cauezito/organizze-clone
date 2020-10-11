@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DespesaActivity">
+    tools:context=".organizze.activity.DespesaActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar3"
@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName6"
+        android:id="@+id/etDescricaoDespesa"
         android:layout_width="310dp"
         android:layout_height="46dp"
         android:layout_marginTop="24dp"
@@ -28,10 +28,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName5" />
+        app:layout_constraintTop_toBottomOf="@+id/etCategoriaDespesa" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName5"
+        android:id="@+id/etCategoriaDespesa"
         android:layout_width="310dp"
         android:layout_height="46dp"
         android:layout_marginTop="24dp"
@@ -41,10 +41,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDate2" />
+        app:layout_constraintTop_toBottomOf="@+id/etValorData" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName3"
+        android:id="@+id/etValorDespesa"
         android:layout_width="224dp"
         android:layout_height="81dp"
         android:ems="10"
@@ -61,7 +61,7 @@
         app:layout_constraintVertical_bias="0.53" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab2"
+        android:id="@+id/btNovaDespesa"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_gravity="center|clip_vertical"
@@ -74,7 +74,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/editTextDate2"
+        android:id="@+id/etValorData"
         android:layout_width="310dp"
         android:layout_height="46dp"
         android:layout_marginTop="48dp"

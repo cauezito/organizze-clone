@@ -8,16 +8,16 @@ import com.heinrichreimersoftware.materialintro.app.IntroActivity;
 import com.heinrichreimersoftware.materialintro.slide.FragmentSlide;
 
 import br.com.cauezito.app.R;
-import br.com.cauezito.app.organizze.firebase.usuario.FirebaseUsuario;
+import br.com.cauezito.app.organizze.firebase.usuario.FirebaseAuthUsuario;
 
 public class MainActivity extends IntroActivity {
 
-    private FirebaseUsuario firebaseUsuario;
+    private FirebaseAuthUsuario firebaseAuthUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        firebaseUsuario = new FirebaseUsuario(this);
+        firebaseAuthUsuario = new FirebaseAuthUsuario(this);
 
         /*Remove botões de navegação*/
         setButtonBackVisible(false);
@@ -29,12 +29,13 @@ public class MainActivity extends IntroActivity {
         addSlide(new FragmentSlide.Builder().background(android.R.color.white).fragment(R.layout.intro_3).build());
         addSlide(new FragmentSlide.Builder().background(android.R.color.white).fragment(R.layout.intro_4).build());
         addSlide(new FragmentSlide.Builder().background(android.R.color.white).fragment(R.layout.intro_cadastro).canGoBackward(false).canGoForward(false).build());
+
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        firebaseUsuario.verificaUsuarioLogado();
+        firebaseAuthUsuario.verificaUsuarioLogado();
     }
 
     public void entrar(View view){

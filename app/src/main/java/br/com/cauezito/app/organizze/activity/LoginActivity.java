@@ -9,7 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import br.com.cauezito.app.R;
-import br.com.cauezito.app.organizze.firebase.usuario.FirebaseUsuario;
+import br.com.cauezito.app.organizze.firebase.usuario.FirebaseAuthUsuario;
 import br.com.cauezito.app.organizze.model.Usuario;
 
 public class LoginActivity extends AppCompatActivity {
@@ -17,7 +17,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText etEmail, etSenha;
     Button entrar;
 
-    FirebaseUsuario firebaseUsuario;
+    FirebaseAuthUsuario firebaseAuthUsuario;
 
 
     @Override
@@ -42,8 +42,8 @@ public class LoginActivity extends AppCompatActivity {
                     usuario.setSenha(senha);
                     usuario.setEmail(email);
 
-                    firebaseUsuario = new FirebaseUsuario(LoginActivity.this);
-                    firebaseUsuario.autenticaUsuario(usuario);
+                    firebaseAuthUsuario = new FirebaseAuthUsuario(LoginActivity.this);
+                    firebaseAuthUsuario.autenticaUsuario(usuario);
                 }
             }
         });

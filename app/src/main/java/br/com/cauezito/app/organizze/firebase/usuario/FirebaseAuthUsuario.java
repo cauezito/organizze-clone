@@ -19,24 +19,41 @@ import br.com.cauezito.app.organizze.activity.HomeActivity;
 import br.com.cauezito.app.organizze.activity.LoginActivity;
 import br.com.cauezito.app.organizze.firebase.config.FirebaseConfig;
 import br.com.cauezito.app.organizze.model.Usuario;
+import br.com.cauezito.app.organizze.utils.Base64Custom;
 
-public class FirebaseUsuario {
+public class FirebaseAuthUsuario {
     private FirebaseAuth autenticacao;
+    private FirebaseDatabaseUsuario banco;
     Activity activity;
 
-    public FirebaseUsuario(Activity activity) {
+    public FirebaseAuthUsuario(Activity activity) {
          this.autenticacao = FirebaseConfig.getFirebaseAutenticacao();
          this.activity = activity;
     }
 
-    public void cadastraUsuario(Usuario usuario){
+    public void cadastraUsuario(final Usuario usuario){
 
         autenticacao.createUserWithEmailAndPassword(usuario.getEmail(), usuario.getSenha()).addOnCompleteListener(activity,
                 new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
+                            //codifica o e-mail do usuário para que ele possa se tornar um id no bd
+                            String id = Base64Custom.codificaBase64(usuario.getEmail());
+                            usuario.setId(id);
+
+                            banco = new FirebaseDatabaseUsuario();
+
+                            banco.salvaUsuario(usuario);
+
+
+
+
                             Toast.makeText(activity, "Cadastro realizado com sucesso! :)", Toast.LENGTH_LONG).show();
+
+
+
+
                             irParaHome();
                         } else {
                             String excecao = "";

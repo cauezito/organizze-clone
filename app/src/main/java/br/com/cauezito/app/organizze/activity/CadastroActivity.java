@@ -9,14 +9,14 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import br.com.cauezito.app.R;
-import br.com.cauezito.app.organizze.firebase.usuario.FirebaseUsuario;
+import br.com.cauezito.app.organizze.firebase.usuario.FirebaseAuthUsuario;
 import br.com.cauezito.app.organizze.model.Usuario;
 
 public class CadastroActivity extends AppCompatActivity {
 
     EditText etEmail, etSenha, etNome;
     Button btCadastrar;
-    FirebaseUsuario firebaseUsuario;
+    FirebaseAuthUsuario firebaseAuthUsuario;
     Usuario usuario;
 
     @Override
@@ -42,8 +42,8 @@ public class CadastroActivity extends AppCompatActivity {
                     usuario.setSenha(senha);
                     usuario.setEmail(email);
 
-                    firebaseUsuario = new FirebaseUsuario(CadastroActivity.this);
-                    firebaseUsuario.cadastraUsuario(usuario);
+                    firebaseAuthUsuario = new FirebaseAuthUsuario(CadastroActivity.this);
+                    firebaseAuthUsuario.cadastraUsuario(usuario);
                 }
             }
         });

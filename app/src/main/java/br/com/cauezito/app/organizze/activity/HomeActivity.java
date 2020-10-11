@@ -4,16 +4,13 @@ package br.com.cauezito.app.organizze.activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.View;
 
-import br.com.cauezito.app.DespesaActivity;
 import br.com.cauezito.app.R;
 
 public class HomeActivity extends AppCompatActivity {

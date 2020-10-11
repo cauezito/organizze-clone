@@ -1,8 +1,10 @@
-package br.com.cauezito.app;
+package br.com.cauezito.app.organizze.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import br.com.cauezito.app.R;
 
 public class DespesaActivity extends AppCompatActivity {
 

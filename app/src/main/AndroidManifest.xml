@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DespesaActivity"
+        <activity android:name=".organizze.activity.DespesaActivity"
             android:theme="@style/DespesaTheme">>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

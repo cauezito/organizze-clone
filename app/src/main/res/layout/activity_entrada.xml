@@ -7,7 +7,7 @@
     tools:context=".organizze.activity.EntradaActivity">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/btNovaEntrada"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_gravity="center|clip_vertical"
@@ -32,7 +32,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/etValorEntrada"
         android:layout_width="244dp"
         android:layout_height="81dp"
         android:layout_marginStart="60dp"
@@ -52,7 +52,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName2"
+        android:id="@+id/etCategoriaEntrada"
         android:layout_width="310dp"
         android:layout_height="46dp"
         android:layout_marginTop="28dp"
@@ -62,10 +62,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.407"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDate" />
+        app:layout_constraintTop_toBottomOf="@+id/etDataEntrada" />
 
     <EditText
-        android:id="@+id/editTextDate"
+        android:id="@+id/etDataEntrada"
         android:layout_width="310dp"
         android:layout_height="46dp"
         android:layout_marginTop="100dp"
@@ -78,7 +78,7 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar2" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName4"
+        android:id="@+id/etDescricaoEntrada"
         android:layout_width="310dp"
         android:layout_height="46dp"
         android:layout_marginTop="32dp"
@@ -88,6 +88,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.427"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2" />
+        app:layout_constraintTop_toBottomOf="@+id/etCategoriaEntrada" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
