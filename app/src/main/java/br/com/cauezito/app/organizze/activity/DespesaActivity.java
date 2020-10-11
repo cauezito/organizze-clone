@@ -32,7 +32,7 @@ public class DespesaActivity extends AppCompatActivity {
 
     }
 
-    public void SalvaDespesa(View view){
+    public void salvaDespesa(View view){
         gerenciaDespesa = new GerenciaDespesa(DespesaActivity.this);
 
         movimentacao = new Movimentacao();
@@ -40,15 +40,23 @@ public class DespesaActivity extends AppCompatActivity {
         movimentacao.setCategoria(etCategoriaDespesa.getText().toString());
         movimentacao.setDescricao(etDescricaoDespesa.getText().toString());
         movimentacao.setData(etData.getText().toString());
-        movimentacao.setTipo(TipoEnum.D.toString());
+        movimentacao.setTipo(TipoEnum.D.getTipo());
 
-        gerenciaDespesa.salvaDespesa(movimentacao);
-
+        validaCampos(movimentacao);
+        //if(validaCampos(movimentacao)) gerenciaDespesa.salvaDespesa(movimentacao);
     }
 
     public static void limpaCampos(){
         etValorDespesa.setText("");
         etCategoriaDespesa.setText("");
         etDescricaoDespesa.setText("");
+    }
+
+    private void validaCampos(Movimentacao movimentacao){
+        if(movimentacao.getValor().equals("")){
+            //asasas
+        }else {
+            //aasasa
+        }
     }
 }
