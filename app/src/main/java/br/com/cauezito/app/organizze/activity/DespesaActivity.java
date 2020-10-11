@@ -14,7 +14,7 @@ import br.com.cauezito.app.organizze.utils.DateCustom;
 
 public class DespesaActivity extends AppCompatActivity {
 
-    private EditText etValorDespesa, etData, etCategoriaDespesa, etDescricaoDespesa;
+    private static EditText etValorDespesa, etData, etCategoriaDespesa, etDescricaoDespesa;
     private Movimentacao movimentacao;
     private GerenciaDespesa gerenciaDespesa;
 
@@ -33,7 +33,7 @@ public class DespesaActivity extends AppCompatActivity {
     }
 
     public void SalvaDespesa(View view){
-        gerenciaDespesa = new GerenciaDespesa();
+        gerenciaDespesa = new GerenciaDespesa(DespesaActivity.this);
 
         movimentacao = new Movimentacao();
         movimentacao.setValor(Double.parseDouble(etValorDespesa.getText().toString()));
@@ -44,6 +44,11 @@ public class DespesaActivity extends AppCompatActivity {
 
         gerenciaDespesa.salvaDespesa(movimentacao);
 
+    }
 
+    public static void limpaCampos(){
+        etValorDespesa.setText("");
+        etCategoriaDespesa.setText("");
+        etDescricaoDespesa.setText("");
     }
 }
