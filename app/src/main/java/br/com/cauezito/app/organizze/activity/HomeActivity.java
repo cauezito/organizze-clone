@@ -4,7 +4,9 @@ package br.com.cauezito.app.organizze.activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.github.clans.fab.FloatingActionMenu;
+import com.google.android.material.appbar.AppBarLayout;
+import com.prolificinteractive.materialcalendarview.CalendarDay;
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -15,7 +17,7 @@ import br.com.cauezito.app.R;
 
 public class HomeActivity extends AppCompatActivity {
 
-    FloatingActionMenu fam;
+    private MaterialCalendarView calendario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +25,12 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        calendario = findViewById(R.id.calendarView);
+
+        calendario.state().edit().setMinimumDate(CalendarDay.from(2020, 0, 1))
+                .setMaximumDate(CalendarDay.from(2020, 11, 31)).commit();
+
     }
 
     public void adicionaDespesa(View view){
