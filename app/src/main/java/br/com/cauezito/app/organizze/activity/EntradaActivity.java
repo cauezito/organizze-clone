@@ -17,6 +17,7 @@ import br.com.cauezito.app.organizze.firebase.movimentacao.despesa.GerenciaDespe
 import br.com.cauezito.app.organizze.firebase.movimentacao.entrada.GerenciaEntrada;
 import br.com.cauezito.app.organizze.model.Movimentacao;
 import br.com.cauezito.app.organizze.model.TipoEnum;
+import br.com.cauezito.app.organizze.utils.DateCustom;
 
 public class EntradaActivity extends AppCompatActivity {
 
@@ -36,6 +37,7 @@ public class EntradaActivity extends AppCompatActivity {
         etCategoriaEntrada = findViewById(R.id.etCategoriaEntrada);
         etDescricaoEntrada = findViewById(R.id.etDescricaoEntrada);
 
+        etDataEntrada.setText(DateCustom.dataAtual());
     }
 
     public void salvaEntrada(View view){
