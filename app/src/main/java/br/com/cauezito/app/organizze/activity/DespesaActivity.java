@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+
 import br.com.cauezito.app.R;
 import br.com.cauezito.app.organizze.firebase.movimentacao.despesa.GerenciaDespesa;
 import br.com.cauezito.app.organizze.model.Movimentacao;
@@ -18,6 +20,7 @@ public class DespesaActivity extends AppCompatActivity {
     private static EditText etValorDespesa, etData, etCategoriaDespesa, etDescricaoDespesa;
     private Movimentacao movimentacao;
     private GerenciaDespesa gerenciaDespesa;
+    private Double despesaAtualizada;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +46,7 @@ public class DespesaActivity extends AppCompatActivity {
             movimentacao.setDescricao(etDescricaoDespesa.getText().toString());
             movimentacao.setData(etData.getText().toString());
             movimentacao.setTipo(TipoEnum.D.getTipo());
+
             gerenciaDespesa.salvaDespesa(movimentacao);
         } catch (NumberFormatException | NullPointerException e){
             Toast.makeText(this, "Digite valores válidos", Toast.LENGTH_LONG).show();

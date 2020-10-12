@@ -36,8 +36,6 @@ public class EntradaActivity extends AppCompatActivity {
         etCategoriaEntrada = findViewById(R.id.etCategoriaEntrada);
         etDescricaoEntrada = findViewById(R.id.etDescricaoEntrada);
 
-        FloatingActionButton fab = findViewById(R.id.btNovaEntrada);
-
     }
 
     public void salvaEntrada(View view){
