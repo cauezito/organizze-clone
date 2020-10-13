@@ -46,10 +46,17 @@ public class HomeActivity extends AppCompatActivity {
     private TextView tvNomeUsuario, tvSaldo;
     private RecyclerView recyclerView;
     private Usuario usuario = new Usuario();
+
     private ValueEventListener valueEventListenerUsuario;
+    private ValueEventListener valueEventListenerMovimentacao;
+
     private DatabaseReference usuarioRef;
+    private DatabaseReference movimentacaoRef;
+
     private AdapterMovimentacao adapterMovimentacao;
     private List<Movimentacao> movimentacoes = new ArrayList<>();
+
+    private String mesAnoSelecionado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +85,34 @@ public class HomeActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         preencheInfoResumo();
+        recuperaMovimentacoes();
+    }
+
+    private void recuperaMovimentacoes(){
+        String emailUsuario = autenticacao.getCurrentUser().getEmail();
+        String id = Base64Custom.codificaBase64(emailUsuario);
+        movimentacaoRef = FirebaseConfig.getDatabaseReference().child("movimentacao").child(id).child(mesAnoSelecionado);
+
+        valueEventListenerMovimentacao = movimentacaoRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                movimentacoes.clear();
+
+                //percorre todas as movimentações
+                for(DataSnapshot dados: dataSnapshot.getChildren()){
+                    Movimentacao movimentacao = dados.getValue(Movimentacao.class);
+                    movimentacoes.add(movimentacao);
+                }
+
+                //notifica que os dados foram atualizados
+                adapterMovimentacao.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void preencheInfoResumo(){
@@ -106,8 +141,6 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {}
         });
-
-
     }
 
     @Override
@@ -133,6 +166,7 @@ public class HomeActivity extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(adapterMovimentacao);
     }
 
     private void configuraCalendario(){
@@ -141,10 +175,18 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void manipulaCalendario(){
+        CalendarDay dataAtual = calendario.getCurrentDate();
+        String mesSelecionado = String.format("%02d", (dataAtual.getMonth() + 1));
+        mesAnoSelecionado = String.valueOf(mesSelecionado + "" + dataAtual.getYear());
+
         calendario.setOnMonthChangedListener(new OnMonthChangedListener() {
             @Override
             public void onMonthChanged(MaterialCalendarView widget, CalendarDay date) {
+                String mesSelecionado = String.format("%02d", (date.getMonth() + 1));
+                mesAnoSelecionado = String.valueOf((date.getMonth() + 1) + "" + date.getYear());
 
+                movimentacaoRef.removeEventListener(valueEventListenerMovimentacao);
+                recuperaMovimentacoes();
             }
         });
     }
@@ -161,5 +203,6 @@ public class HomeActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         usuarioRef.removeEventListener(valueEventListenerUsuario);
+        movimentacaoRef.removeEventListener(valueEventListenerMovimentacao);
     }
 }
