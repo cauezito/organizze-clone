@@ -14,8 +14,11 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
+import com.heinrichreimersoftware.materialintro.app.IntroActivity;
 
+import br.com.cauezito.app.organizze.activity.EntradaActivity;
 import br.com.cauezito.app.organizze.activity.HomeActivity;
+import br.com.cauezito.app.organizze.activity.MainActivity;
 import br.com.cauezito.app.organizze.firebase.config.FirebaseConfig;
 import br.com.cauezito.app.organizze.model.Usuario;
 import br.com.cauezito.app.organizze.utils.Base64Custom;
@@ -23,7 +26,7 @@ import br.com.cauezito.app.organizze.utils.Base64Custom;
 public class FirebaseAuthUsuario {
     private FirebaseAuth autenticacao;
     private FirebaseDatabaseUsuario banco;
-    Activity activity;
+    private Activity activity;
 
     public FirebaseAuthUsuario(Activity activity) {
          this.autenticacao = FirebaseConfig.getFirebaseAutenticacao();
@@ -45,13 +48,7 @@ public class FirebaseAuthUsuario {
 
                             banco.salvaUsuario(usuario);
 
-
-
-
                             Toast.makeText(activity, "Cadastro realizado com sucesso! :)", Toast.LENGTH_LONG).show();
-
-
-
 
                             irParaHome();
                         } else {
@@ -106,6 +103,11 @@ public class FirebaseAuthUsuario {
         activity.finish();
     }
 
+    private void irParaTelaIntro(){
+        activity.startActivity(new Intent(activity, MainActivity.class));
+        activity.finish();
+    }
+
     public void verificaUsuarioLogado(){
         if(autenticacao.getCurrentUser() != null){
             irParaHome();
@@ -114,6 +116,8 @@ public class FirebaseAuthUsuario {
 
     public void deslogaUsuario(){
         autenticacao.signOut();
+        irParaTelaIntro();
+        Toast.makeText(activity, "Você saiu", Toast.LENGTH_LONG).show();
     }
 
 }

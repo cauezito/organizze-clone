@@ -19,7 +19,6 @@
         </activity>
         <activity
             android:name=".organizze.activity.EntradaActivity"
-            android:label="@string/title_activity_entrada"
             android:theme="@style/EntradaTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,7 +28,6 @@
         </activity>
         <activity
             android:name=".organizze.activity.HomeActivity"
-            android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -24,6 +24,8 @@ public class CadastroActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
 
+        getSupportActionBar().hide();
+
         etEmail = findViewById(R.id.etEmailLogin);
         etSenha = findViewById(R.id.etSenhaLogin);
         etNome = findViewById(R.id.etNome);
