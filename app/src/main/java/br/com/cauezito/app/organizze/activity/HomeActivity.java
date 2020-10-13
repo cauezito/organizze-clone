@@ -41,6 +41,8 @@ public class HomeActivity extends AppCompatActivity {
     private FirebaseAuth autenticacao;
     private TextView tvNomeUsuario, tvSaldo;
     private Usuario usuario = new Usuario();
+    private ValueEventListener valueEventListenerUsuario;
+    DatabaseReference usuarioRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +62,13 @@ public class HomeActivity extends AppCompatActivity {
 
         configuraCalendario();
         manipulaCalendario();
-        preencheInfoResumo();
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        preencheInfoResumo();
     }
 
     private void preencheInfoResumo(){
@@ -69,12 +76,12 @@ public class HomeActivity extends AppCompatActivity {
         String id = Base64Custom.codificaBase64(emailUsuario);
         DatabaseReference firebaseRef = FirebaseConfig.getDatabaseReference();
 
-        DatabaseReference usuarioRef = firebaseRef.child("usuarios").child(id);
+        usuarioRef = firebaseRef.child("usuarios").child(id);
 
         tvNomeUsuario.setText("Carregando...");
         tvSaldo.setText("R$0.00");
 
-        usuarioRef.addValueEventListener(new ValueEventListener() {
+        valueEventListenerUsuario = usuarioRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 usuario = dataSnapshot.getValue(Usuario.class);
@@ -133,4 +140,9 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(new Intent(this, EntradaActivity.class));
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        usuarioRef.removeEventListener(valueEventListenerUsuario);
+    }
 }
