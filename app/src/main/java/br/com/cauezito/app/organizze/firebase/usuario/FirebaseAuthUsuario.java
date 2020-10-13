@@ -14,9 +14,10 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
-import com.heinrichreimersoftware.materialintro.app.IntroActivity;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
-import br.com.cauezito.app.organizze.activity.EntradaActivity;
 import br.com.cauezito.app.organizze.activity.HomeActivity;
 import br.com.cauezito.app.organizze.activity.MainActivity;
 import br.com.cauezito.app.organizze.firebase.config.FirebaseConfig;

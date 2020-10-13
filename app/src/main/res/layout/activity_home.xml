@@ -23,8 +23,8 @@
     </com.prolificinteractive.materialcalendarview.MaterialCalendarView>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="391dp"
-        android:layout_height="397dp"
+        android:layout_width="380dp"
+        android:layout_height="439dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
@@ -129,8 +129,8 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="0dp"
-        android:layout_height="176dp"
+        android:layout_width="415dp"
+        android:layout_height="140dp"
         android:background="?attr/colorPrimary"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
@@ -144,12 +144,13 @@
             android:gravity="center"
             android:text="Bem vindo!"
             android:textColor="@color/colorPrimaryEntrada"
-            android:textSize="40sp" />
+            android:textSize="28sp" />
 
         <TextView
             android:id="@+id/tvSaldo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="30px"
             android:gravity="center"
             android:text="R$1400"
             android:textColor="@color/colorPrimaryEntrada"

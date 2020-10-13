@@ -5,6 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.appbar.AppBarLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnMonthChangedListener;
@@ -18,15 +24,23 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
+
 import br.com.cauezito.app.R;
+import br.com.cauezito.app.organizze.firebase.config.FirebaseConfig;
 import br.com.cauezito.app.organizze.firebase.usuario.FirebaseAuthUsuario;
+import br.com.cauezito.app.organizze.firebase.usuario.FirebaseDatabaseUsuario;
 import br.com.cauezito.app.organizze.model.Usuario;
+import br.com.cauezito.app.organizze.utils.Base64Custom;
 
 public class HomeActivity extends AppCompatActivity {
 
     private MaterialCalendarView calendario;
     private FirebaseAuthUsuario firebaseAuthUsuario;
+    private FirebaseDatabaseUsuario firebaseDatabaseUsuario;
+    private FirebaseAuth autenticacao;
     private TextView tvNomeUsuario, tvSaldo;
+    private Usuario usuario = new Usuario();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +51,8 @@ public class HomeActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         firebaseAuthUsuario = new FirebaseAuthUsuario(this);
+        firebaseDatabaseUsuario = new FirebaseDatabaseUsuario();
+        autenticacao = FirebaseConfig.getFirebaseAutenticacao();
 
         tvNomeUsuario = findViewById(R.id.tvNomeUsuario);
         tvSaldo = findViewById(R.id.tvSaldo);
@@ -44,6 +60,37 @@ public class HomeActivity extends AppCompatActivity {
 
         configuraCalendario();
         manipulaCalendario();
+        preencheInfoResumo();
+
+    }
+
+    private void preencheInfoResumo(){
+        String emailUsuario = autenticacao.getCurrentUser().getEmail();
+        String id = Base64Custom.codificaBase64(emailUsuario);
+        DatabaseReference firebaseRef = FirebaseConfig.getDatabaseReference();
+
+        DatabaseReference usuarioRef = firebaseRef.child("usuarios").child(id);
+
+        tvNomeUsuario.setText("Carregando...");
+        tvSaldo.setText("R$0.00");
+
+        usuarioRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                usuario = dataSnapshot.getValue(Usuario.class);
+                Double resumo = usuario.getReceitaTotal() - usuario.getDespesaTotal();
+
+                DecimalFormat decimalFormat = new DecimalFormat("0.##");
+                String saldoTotal = decimalFormat.format(resumo);
+
+                tvNomeUsuario.setText("Olá, " + usuario.getNome() + "!");
+                tvSaldo.setText("R$" + saldoTotal);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {}
+        });
+
 
     }
 
@@ -85,6 +132,5 @@ public class HomeActivity extends AppCompatActivity {
     public void adicionaEntrada(View view){
         startActivity(new Intent(this, EntradaActivity.class));
     }
-
 
 }
