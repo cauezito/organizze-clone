@@ -4,12 +4,10 @@ package br.com.cauezito.app.organizze.activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.google.android.material.appbar.AppBarLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
@@ -18,6 +16,8 @@ import com.prolificinteractive.materialcalendarview.OnMonthChangedListener;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,11 +25,15 @@ import android.view.View;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import br.com.cauezito.app.R;
+import br.com.cauezito.app.organizze.adapter.AdapterMovimentacao;
 import br.com.cauezito.app.organizze.firebase.config.FirebaseConfig;
 import br.com.cauezito.app.organizze.firebase.usuario.FirebaseAuthUsuario;
 import br.com.cauezito.app.organizze.firebase.usuario.FirebaseDatabaseUsuario;
+import br.com.cauezito.app.organizze.model.Movimentacao;
 import br.com.cauezito.app.organizze.model.Usuario;
 import br.com.cauezito.app.organizze.utils.Base64Custom;
 
@@ -40,9 +44,12 @@ public class HomeActivity extends AppCompatActivity {
     private FirebaseDatabaseUsuario firebaseDatabaseUsuario;
     private FirebaseAuth autenticacao;
     private TextView tvNomeUsuario, tvSaldo;
+    private RecyclerView recyclerView;
     private Usuario usuario = new Usuario();
     private ValueEventListener valueEventListenerUsuario;
-    DatabaseReference usuarioRef;
+    private DatabaseReference usuarioRef;
+    private AdapterMovimentacao adapterMovimentacao;
+    private List<Movimentacao> movimentacoes = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +66,9 @@ public class HomeActivity extends AppCompatActivity {
         tvNomeUsuario = findViewById(R.id.tvNomeUsuario);
         tvSaldo = findViewById(R.id.tvSaldo);
         calendario = findViewById(R.id.calendarView);
+        recyclerView = findViewById(R.id.recyclerView);
 
+        configuraRecyclerView();
         configuraCalendario();
         manipulaCalendario();
 
@@ -116,6 +125,14 @@ public class HomeActivity extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void configuraRecyclerView(){
+        adapterMovimentacao = new AdapterMovimentacao(movimentacoes, this);
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
     }
 
     private void configuraCalendario(){

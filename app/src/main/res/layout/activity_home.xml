@@ -23,6 +23,7 @@
     </com.prolificinteractive.materialcalendarview.MaterialCalendarView>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="380dp"
         android:layout_height="439dp"
         android:layout_marginStart="8dp"
