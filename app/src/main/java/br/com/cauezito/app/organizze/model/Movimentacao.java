@@ -1,6 +1,7 @@
 package br.com.cauezito.app.organizze.model;
 
 public class Movimentacao {
+    private String id;
     private String data;
     private String categoria;
     private String descricao;
@@ -9,6 +10,14 @@ public class Movimentacao {
 
     public Movimentacao(){
 
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getData() {

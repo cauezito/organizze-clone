@@ -1,6 +1,9 @@
 package br.com.cauezito.app.organizze.activity;
 
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -24,6 +27,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -42,7 +46,6 @@ public class HomeActivity extends AppCompatActivity {
 
     private MaterialCalendarView calendario;
     private FirebaseAuthUsuario firebaseAuthUsuario;
-    private FirebaseDatabaseUsuario firebaseDatabaseUsuario;
     private FirebaseAuth autenticacao;
     private TextView tvNomeUsuario, tvSaldo;
     private RecyclerView recyclerView;
@@ -56,6 +59,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private AdapterMovimentacao adapterMovimentacao;
     private List<Movimentacao> movimentacoes = new ArrayList<>();
+    private Movimentacao movimentacao;
 
     private String mesAnoSelecionado;
 
@@ -68,7 +72,6 @@ public class HomeActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         firebaseAuthUsuario = new FirebaseAuthUsuario(this);
-        firebaseDatabaseUsuario = new FirebaseDatabaseUsuario();
         autenticacao = FirebaseConfig.getFirebaseAutenticacao();
 
         tvNomeUsuario = findViewById(R.id.tvNomeUsuario);
@@ -106,11 +109,46 @@ public class HomeActivity extends AppCompatActivity {
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-
+                excluirMovimentacao(viewHolder);
             }
         };
 
         new ItemTouchHelper(itemTouch).attachToRecyclerView(recyclerView);
+    }
+
+    private void excluirMovimentacao(RecyclerView.ViewHolder viewHolder){
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+
+        alertDialog.setTitle("Você quer excluir esta movimentação?");
+        alertDialog.setCancelable(false);
+
+        alertDialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //exclusão
+                int posicao = viewHolder.getAdapterPosition();
+                movimentacao = movimentacoes.get(posicao);
+
+                String emailUsuario = autenticacao.getCurrentUser().getEmail();
+                String id = Base64Custom.codificaBase64(emailUsuario);
+                movimentacaoRef = FirebaseConfig.getDatabaseReference().child("movimentacao").child(id).child(mesAnoSelecionado);
+                movimentacaoRef.child(movimentacao.getId()).removeValue();
+                adapterMovimentacao.notifyItemRemoved(posicao);
+
+                Toast.makeText(HomeActivity.this, "Movimentação excluída", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+        alertDialog.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                adapterMovimentacao.notifyDataSetChanged();
+            }
+        });
+
+        AlertDialog alert = alertDialog.create();
+        alert.show();
     }
 
     private void recuperaMovimentacoes(){
@@ -126,6 +164,7 @@ public class HomeActivity extends AppCompatActivity {
                 //percorre todas as movimentações
                 for(DataSnapshot dados: dataSnapshot.getChildren()){
                     Movimentacao movimentacao = dados.getValue(Movimentacao.class);
+                    movimentacao.setId(dados.getKey());
                     movimentacoes.add(movimentacao);
                 }
 
