@@ -125,7 +125,6 @@ public class HomeActivity extends AppCompatActivity {
 
         alertDialog.setTitle("Você quer excluir esta movimentação?");
         alertDialog.setCancelable(false);
-
         alertDialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
