@@ -20,7 +20,6 @@ public class DespesaActivity extends AppCompatActivity {
     private static EditText etValorDespesa, etData, etCategoriaDespesa, etDescricaoDespesa;
     private Movimentacao movimentacao;
     private GerenciaDespesa gerenciaDespesa;
-    private Double despesaAtualizada;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

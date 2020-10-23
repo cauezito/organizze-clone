@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,9 +37,12 @@ import java.util.List;
 import br.com.cauezito.app.R;
 import br.com.cauezito.app.organizze.adapter.AdapterMovimentacao;
 import br.com.cauezito.app.organizze.firebase.config.FirebaseConfig;
+import br.com.cauezito.app.organizze.firebase.movimentacao.despesa.GerenciaDespesa;
+import br.com.cauezito.app.organizze.firebase.movimentacao.entrada.GerenciaEntrada;
 import br.com.cauezito.app.organizze.firebase.usuario.FirebaseAuthUsuario;
 import br.com.cauezito.app.organizze.firebase.usuario.FirebaseDatabaseUsuario;
 import br.com.cauezito.app.organizze.model.Movimentacao;
+import br.com.cauezito.app.organizze.model.TipoEnum;
 import br.com.cauezito.app.organizze.model.Usuario;
 import br.com.cauezito.app.organizze.utils.Base64Custom;
 
@@ -135,6 +139,11 @@ public class HomeActivity extends AppCompatActivity {
                 movimentacaoRef.child(movimentacao.getId()).removeValue();
                 adapterMovimentacao.notifyItemRemoved(posicao);
 
+                DatabaseReference firebaseRef = FirebaseConfig.getDatabaseReference();
+                usuarioRef = firebaseRef.child("usuarios").child(id);
+
+                alteraSaldo(movimentacao.getTipo() , movimentacao.getValor());
+
                 Toast.makeText(HomeActivity.this, "Movimentação excluída", Toast.LENGTH_SHORT).show();
 
             }
@@ -150,6 +159,20 @@ public class HomeActivity extends AppCompatActivity {
         AlertDialog alert = alertDialog.create();
         alert.show();
     }
+
+    private void alteraSaldo(String tipo, Double valor){
+        Log.i("tipo", TipoEnum.D.getTipo());
+        if(tipo.equals(TipoEnum.D.getTipo())){
+            Double despesaTotal = GerenciaDespesa.alteraDespesaTotal(valor);
+            usuarioRef.child("despesaTotal").setValue(despesaTotal);
+
+        } else if (tipo.equals(TipoEnum.E.getTipo())){
+            Double receitaTotal = GerenciaEntrada.alteraReceitaTotal(valor);
+            usuarioRef.child("receitaTotal").setValue(receitaTotal);
+        }
+    }
+
+
 
     private void recuperaMovimentacoes(){
         String emailUsuario = autenticacao.getCurrentUser().getEmail();

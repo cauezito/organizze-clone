@@ -40,7 +40,7 @@ public class AdapterMovimentacao extends RecyclerView.Adapter<AdapterMovimentaca
         holder.valor.setText(String.valueOf(movimentacao.getValor()));
         holder.categoria.setText(movimentacao.getCategoria());
 
-        if (movimentacao.getTipo() == TipoEnum.D.toString()) {
+        if (movimentacao.getTipo() == TipoEnum.D.getTipo()) {
             holder.valor.setTextColor(context.getResources().getColor(R.color.colorToolbarDespesa));
             holder.valor.setText("-" + movimentacao.getValor());
         }

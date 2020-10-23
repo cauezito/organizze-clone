@@ -5,8 +5,4 @@ import br.com.cauezito.app.organizze.model.Movimentacao;
 
 public interface IGerenciaDespesa {
     void salvaDespesa(Movimentacao movimentacao);
-
-    static void recuperaDespesaTotal() {
-
-    }
 }

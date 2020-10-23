@@ -87,5 +87,9 @@ public class GerenciaEntrada implements IGerenciaEntrada {
         String idUsuario = Base64Custom.codificaBase64(autenticacao.getCurrentUser().getEmail());
         banco.child(USUARIOS).child(idUsuario).child(RECEITA_TOTAL).setValue(despesa);
     }
+
+    public static Double alteraReceitaTotal(Double receita){
+        return receitaTotal -= receita;
+    }
 }
 

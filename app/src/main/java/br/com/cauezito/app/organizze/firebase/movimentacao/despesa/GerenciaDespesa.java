@@ -80,8 +80,12 @@ public class GerenciaDespesa implements IGerenciaDespesa{
         return despesaTotal;
     }
 
-    public void atualizaDespesa(Double despesa){
+    public static void atualizaDespesa(Double despesa){
         String idUsuario = Base64Custom.codificaBase64(autenticacao.getCurrentUser().getEmail());
         banco.child(USUARIOS).child(idUsuario).child(DESPESA_TOTAL).setValue(despesa);
+    }
+
+    public static Double alteraDespesaTotal(Double despesa){
+        return despesaTotal -= despesa;
     }
 }
