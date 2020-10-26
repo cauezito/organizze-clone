@@ -1,6 +1,7 @@
 package br.com.cauezito.app.organizze.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,9 +41,10 @@ public class AdapterMovimentacao extends RecyclerView.Adapter<AdapterMovimentaca
         holder.valor.setText(String.valueOf(movimentacao.getValor()));
         holder.categoria.setText(movimentacao.getCategoria());
 
-        if (movimentacao.getTipo() == TipoEnum.D.getTipo()) {
+        if (movimentacao.getTipo().equals(TipoEnum.D.getTipo())) {
             holder.valor.setTextColor(context.getResources().getColor(R.color.colorToolbarDespesa));
-            holder.valor.setText("-" + movimentacao.getValor());
+            holder.valor.setText("R$"+movimentacao.getValor());
+            Log.d("tipo", TipoEnum.D.getTipo());
         }
     }
 

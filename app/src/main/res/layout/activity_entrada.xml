@@ -52,16 +52,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/etCategoriaEntrada"
+    <Spinner
+        android:id="@+id/spCategoria"
         android:layout_width="310dp"
         android:layout_height="46dp"
-        android:layout_marginTop="28dp"
-        android:ems="10"
-        android:hint="Categoria"
-        android:inputType="textShortMessage"
+        android:layout_marginTop="56dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.407"
+        app:layout_constraintHorizontal_bias="0.415"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etDataEntrada" />
 
@@ -82,13 +79,13 @@
         android:id="@+id/etDescricaoEntrada"
         android:layout_width="310dp"
         android:layout_height="46dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="44dp"
         android:ems="10"
         android:hint="Descrição"
         android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.427"
+        app:layout_constraintHorizontal_bias="0.415"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etCategoriaEntrada" />
+        app:layout_constraintTop_toBottomOf="@+id/spCategoria" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -54,7 +54,6 @@ public class GerenciaEntrada implements IGerenciaEntrada {
                         atualizaReceita(receitaAtualizada);
 
                         Toast.makeText(entradaActivity.getBaseContext(), "Entrada salva", Toast.LENGTH_LONG).show();
-                        EntradaActivity.limpaCampos();
                     }
                 }
         ).addOnFailureListener(entradaActivity, new OnFailureListener() {

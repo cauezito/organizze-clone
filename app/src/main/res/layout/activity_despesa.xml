@@ -21,25 +21,21 @@
         android:id="@+id/etDescricaoDespesa"
         android:layout_width="310dp"
         android:layout_height="46dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="56dp"
         android:ems="10"
         android:hint="Descrição"
         android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etCategoriaDespesa" />
+        app:layout_constraintTop_toBottomOf="@+id/spCategoria" />
 
-    <EditText
-        android:id="@+id/etCategoriaDespesa"
+    <Spinner
+        android:id="@+id/spCategoria"
         android:layout_width="310dp"
         android:layout_height="46dp"
-        android:layout_marginTop="24dp"
-        android:ems="10"
-        android:hint="Categoria"
-        android:inputType="textShortMessage"
+        android:layout_marginTop="56dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etValorData" />
 
