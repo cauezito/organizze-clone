@@ -5,4 +5,8 @@
         android:orderInCategory="100"
         android:title="@string/sair"
         app:showAsAction="never"/>
+    <item android:id="@+id/menuConfig"
+        android:orderInCategory="100"
+        android:title="@string/config"
+        app:showAsAction="never"/>
 </menu>

@@ -10,6 +10,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import br.com.cauezito.app.R;
+import br.com.cauezito.app.organizze.config.Preferencias;
 import br.com.cauezito.app.organizze.firebase.movimentacao.despesa.GerenciaDespesa;
 import br.com.cauezito.app.organizze.model.Movimentacao;
 import br.com.cauezito.app.organizze.model.TipoEnum;
@@ -54,11 +55,20 @@ public class DespesaActivity extends AppCompatActivity{
             movimentacao.setData(etData.getText().toString());
             movimentacao.setTipo(TipoEnum.D.getTipo());
             gerenciaDespesa.salvaDespesa(movimentacao);
+
+            if(Preferencias.fechaActivityAposNovaMovimentacao){
+                this.finish();
+            } else {
+                limpaCampos();
+            }
         } catch (NumberFormatException | NullPointerException e){
             Toast.makeText(this, "Digite valores válidos", Toast.LENGTH_LONG).show();
         }
+    }
 
-        this.finish();
+    private void limpaCampos() {
+        etValorDespesa.setText("");
+        etDescricaoDespesa.setText("");
     }
 
 }

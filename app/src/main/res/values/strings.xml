@@ -26,5 +26,9 @@
     <!-- MENU -->
     <string name="sair">Sair</string>
     <string name="voce_saiu">Você saiu</string>
+    <string name="config">Configurações</string>
+
+    <!-- CONFIGURAÇÕES -->
+    <string name="fechar_activity">Voltar para tela inicial sempre que incluir nova movimentação</string>
 
 </resources>

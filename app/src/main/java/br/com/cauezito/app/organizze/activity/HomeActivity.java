@@ -1,8 +1,6 @@
 package br.com.cauezito.app.organizze.activity;
 
-
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -36,11 +34,11 @@ import java.util.List;
 
 import br.com.cauezito.app.R;
 import br.com.cauezito.app.organizze.adapter.AdapterMovimentacao;
+import br.com.cauezito.app.organizze.config.Preferencias;
 import br.com.cauezito.app.organizze.firebase.config.FirebaseConfig;
 import br.com.cauezito.app.organizze.firebase.movimentacao.despesa.GerenciaDespesa;
 import br.com.cauezito.app.organizze.firebase.movimentacao.entrada.GerenciaEntrada;
 import br.com.cauezito.app.organizze.firebase.usuario.FirebaseAuthUsuario;
-import br.com.cauezito.app.organizze.firebase.usuario.FirebaseDatabaseUsuario;
 import br.com.cauezito.app.organizze.model.Movimentacao;
 import br.com.cauezito.app.organizze.model.TipoEnum;
 import br.com.cauezito.app.organizze.model.Usuario;
@@ -60,6 +58,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private DatabaseReference usuarioRef;
     private DatabaseReference movimentacaoRef;
+    private DatabaseReference preferenciasRef;
 
     private AdapterMovimentacao adapterMovimentacao;
     private List<Movimentacao> movimentacoes = new ArrayList<>();
@@ -86,7 +85,24 @@ public class HomeActivity extends AppCompatActivity {
         configuraRecyclerView();
         configuraCalendario();
         manipulaCalendario();
+        recuperaPreferencias();
         swipe();
+    }
+
+    private void recuperaPreferencias() {
+        preferenciasRef = FirebaseConfig.getDatabaseReference().child("config").child("preferencias").
+                child("fecharAposNovaMovimentacao");
+
+        preferenciasRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Preferencias.fechaActivityAposNovaMovimentacao = Boolean.parseBoolean(snapshot.getValue().toString());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        });
+
     }
 
     @Override
@@ -196,9 +212,7 @@ public class HomeActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
+            public void onCancelled(@NonNull DatabaseError databaseError) {}
         });
     }
 
@@ -242,6 +256,9 @@ public class HomeActivity extends AppCompatActivity {
             case R.id.menuSair:
                 firebaseAuthUsuario.deslogaUsuario();
                 this.finish();
+                break;
+            case R.id.menuConfig:
+                startActivity(new Intent(this, ConfigActivity.class));
                 break;
         }
         return super.onOptionsItemSelected(item);
