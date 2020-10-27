@@ -25,9 +25,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,16 +45,16 @@ import br.com.cauezito.app.organizze.model.TipoEnum;
 import br.com.cauezito.app.organizze.model.Usuario;
 import br.com.cauezito.app.organizze.utils.Base64Custom;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity{
 
     private MaterialCalendarView calendario;
     private FirebaseAuthUsuario firebaseAuthUsuario;
     private FirebaseAuth autenticacao;
     private TextView tvNomeUsuario, tvSaldo;
     private ImageView ivFiltro;
-    private Spinner spFiltro;
     private RecyclerView recyclerView;
     private Usuario usuario = new Usuario();
+    private String filtro = "data";
 
     private ValueEventListener valueEventListenerUsuario;
     private ValueEventListener valueEventListenerMovimentacao;
@@ -87,14 +85,11 @@ public class HomeActivity extends AppCompatActivity {
         calendario = findViewById(R.id.calendarView);
         recyclerView = findViewById(R.id.recyclerView);
         ivFiltro = findViewById(R.id.ivFiltro);
-        spFiltro = findViewById(R.id.spFiltro);
-
-        spFiltro.setVisibility(View.GONE);
 
         ivFiltro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                spFiltro.setVisibility(View.VISIBLE);
+                recuperaMovimentacoes("valor");
             }
         });
 
@@ -102,15 +97,7 @@ public class HomeActivity extends AppCompatActivity {
         configuraCalendario();
         manipulaCalendario();
         recuperaPreferencias();
-        configuraFiltro();
         swipe();
-    }
-
-    private void configuraFiltro() {
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.spinner_filtro, android.R.layout.simple_spinner_dropdown_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spFiltro.setAdapter(adapter);
     }
 
     private void recuperaPreferencias() {
@@ -133,7 +120,7 @@ public class HomeActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         preencheInfoResumo();
-        recuperaMovimentacoes();
+        recuperaMovimentacoes(filtro);
     }
 
     private void swipe(){
@@ -185,7 +172,6 @@ public class HomeActivity extends AppCompatActivity {
                 alteraSaldo(movimentacao.getTipo() , movimentacao.getValor());
 
                 Toast.makeText(HomeActivity.this, "Movimentação excluída", Toast.LENGTH_SHORT).show();
-
             }
         });
 
@@ -214,23 +200,22 @@ public class HomeActivity extends AppCompatActivity {
 
 
 
-    private void recuperaMovimentacoes(){
+    private void recuperaMovimentacoes(String filtro){
         String emailUsuario = autenticacao.getCurrentUser().getEmail();
         String id = Base64Custom.codificaBase64(emailUsuario);
+
         movimentacaoRef = FirebaseConfig.getDatabaseReference().child("movimentacao").child(id).child(mesAnoSelecionado);
 
-        valueEventListenerMovimentacao = movimentacaoRef.addValueEventListener(new ValueEventListener() {
+        valueEventListenerMovimentacao = movimentacaoRef.orderByChild(filtro).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 movimentacoes.clear();
-
                 //percorre todas as movimentações
                 for(DataSnapshot dados: dataSnapshot.getChildren()){
                     Movimentacao movimentacao = dados.getValue(Movimentacao.class);
                     movimentacao.setId(dados.getKey());
                     movimentacoes.add(movimentacao);
                 }
-
                 //notifica que os dados foram atualizados
                 adapterMovimentacao.notifyDataSetChanged();
             }
@@ -314,7 +299,7 @@ public class HomeActivity extends AppCompatActivity {
                 mesAnoSelecionado = String.valueOf((date.getMonth() + 1) + "" + date.getYear());
 
                 movimentacaoRef.removeEventListener(valueEventListenerMovimentacao);
-                recuperaMovimentacoes();
+                recuperaMovimentacoes(filtro);
             }
         });
     }

@@ -168,18 +168,4 @@
         app:layout_constraintTop_toBottomOf="@+id/calendarView"
         fab:srcCompat="@drawable/ic_baseline_filter_list_24" />
 
-    <Spinner
-        android:id="@+id/spFiltro"
-        android:layout_width="283dp"
-        android:layout_height="38dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/ivFiltro"
-        app:layout_constraintTop_toBottomOf="@+id/calendarView"
-        app:layout_constraintVertical_bias="0.0" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
