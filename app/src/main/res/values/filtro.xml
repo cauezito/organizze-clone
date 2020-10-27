@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="spinner_filtro">
+        <item>ENTRADA - Maior valor</item>
+        <item>ENTRADA - Menor valor</item>
+        <item>DESPESA - Maior valor</item>
+        <item>DESPESA - Menor valor</item>
+    </string-array>
+</resources>
