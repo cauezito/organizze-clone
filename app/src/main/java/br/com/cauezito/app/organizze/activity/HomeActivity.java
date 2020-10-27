@@ -25,6 +25,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -101,7 +102,15 @@ public class HomeActivity extends AppCompatActivity {
         configuraCalendario();
         manipulaCalendario();
         recuperaPreferencias();
+        configuraFiltro();
         swipe();
+    }
+
+    private void configuraFiltro() {
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.spinner_filtro, android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spFiltro.setAdapter(adapter);
     }
 
     private void recuperaPreferencias() {
