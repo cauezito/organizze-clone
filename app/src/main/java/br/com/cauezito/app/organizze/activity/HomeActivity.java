@@ -25,6 +25,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,6 +52,8 @@ public class HomeActivity extends AppCompatActivity {
     private FirebaseAuthUsuario firebaseAuthUsuario;
     private FirebaseAuth autenticacao;
     private TextView tvNomeUsuario, tvSaldo;
+    private ImageView ivFiltro;
+    private Spinner spFiltro;
     private RecyclerView recyclerView;
     private Usuario usuario = new Usuario();
 
@@ -81,6 +85,17 @@ public class HomeActivity extends AppCompatActivity {
         tvSaldo = findViewById(R.id.tvSaldo);
         calendario = findViewById(R.id.calendarView);
         recyclerView = findViewById(R.id.recyclerView);
+        ivFiltro = findViewById(R.id.ivFiltro);
+        spFiltro = findViewById(R.id.spFiltro);
+
+        spFiltro.setVisibility(View.GONE);
+
+        ivFiltro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                spFiltro.setVisibility(View.VISIBLE);
+            }
+        });
 
         configuraRecyclerView();
         configuraCalendario();
