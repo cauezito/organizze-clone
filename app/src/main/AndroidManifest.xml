@@ -14,8 +14,6 @@
             android:name=".organizze.activity.DespesaActivity"
             android:theme="@style/DespesaTheme">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -23,8 +21,6 @@
             android:name=".organizze.activity.EntradaActivity"
             android:theme="@style/EntradaTheme">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -32,8 +28,6 @@
             android:name=".organizze.activity.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
