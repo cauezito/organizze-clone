@@ -44,6 +44,7 @@ import br.com.cauezito.app.organizze.model.Movimentacao;
 import br.com.cauezito.app.organizze.model.TipoEnum;
 import br.com.cauezito.app.organizze.model.Usuario;
 import br.com.cauezito.app.organizze.utils.Base64Custom;
+import br.com.cauezito.app.organizze.utils.Valores;
 
 public class HomeActivity extends AppCompatActivity{
 
@@ -244,8 +245,8 @@ public class HomeActivity extends AppCompatActivity{
                 DecimalFormat decimalFormat = new DecimalFormat("0.##");
                 String saldoTotal = decimalFormat.format(resumo);
 
-                tvNomeUsuario.setText("Olá, " + usuario.getNome() + "!");
-                tvSaldo.setText("R$" + saldoTotal);
+                tvNomeUsuario.setText("E aí, " + usuario.getNome() + "!");
+                tvSaldo.setText("R$ " + Valores.configuraValor(Double.parseDouble(saldoTotal)));
             }
 
             @Override

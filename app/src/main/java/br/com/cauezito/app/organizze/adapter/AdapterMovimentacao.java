@@ -17,6 +17,7 @@ import java.util.Locale;
 import br.com.cauezito.app.R;
 import br.com.cauezito.app.organizze.model.Movimentacao;
 import br.com.cauezito.app.organizze.model.TipoEnum;
+import br.com.cauezito.app.organizze.utils.Valores;
 
 
 public class AdapterMovimentacao extends RecyclerView.Adapter<AdapterMovimentacao.MyViewHolder> {
@@ -40,7 +41,7 @@ public class AdapterMovimentacao extends RecyclerView.Adapter<AdapterMovimentaca
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Movimentacao movimentacao = movimentacoes.get(position);
         String dia = "Dia " + movimentacao.getData().substring(0,2);
-        String valor = "R$ " + configuraValor(movimentacao.getValor());
+        String valor = "R$ " + Valores.configuraValor(movimentacao.getValor());
 
         holder.titulo.setText(movimentacao.getDescricao());
         holder.valor.setText(valor);
@@ -53,10 +54,7 @@ public class AdapterMovimentacao extends RecyclerView.Adapter<AdapterMovimentaca
         }
     }
 
-    private String configuraValor(Double valor) {
-        DecimalFormat decimalFormat = new DecimalFormat("#,##0.00", new DecimalFormatSymbols(new Locale("pt", "BR")));
-        return decimalFormat.format(valor);
-    }
+
 
 
     @Override
