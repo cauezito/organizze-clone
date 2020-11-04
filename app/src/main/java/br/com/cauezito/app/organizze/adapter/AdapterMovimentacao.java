@@ -36,10 +36,12 @@ public class AdapterMovimentacao extends RecyclerView.Adapter<AdapterMovimentaca
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Movimentacao movimentacao = movimentacoes.get(position);
+        String dia = "Dia " + movimentacao.getData().substring(0,2);
 
         holder.titulo.setText(movimentacao.getDescricao());
         holder.valor.setText(String.valueOf(movimentacao.getValor()));
         holder.categoria.setText(movimentacao.getCategoria());
+        holder.data.setText(dia);
 
         if (movimentacao.getTipo().equals(TipoEnum.D.getTipo())) {
             holder.valor.setTextColor(context.getResources().getColor(R.color.colorToolbarDespesa));
@@ -56,7 +58,7 @@ public class AdapterMovimentacao extends RecyclerView.Adapter<AdapterMovimentaca
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView titulo, valor, categoria;
+        TextView titulo, valor, categoria, data;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -64,6 +66,7 @@ public class AdapterMovimentacao extends RecyclerView.Adapter<AdapterMovimentaca
             titulo = itemView.findViewById(R.id.textAdapterTitulo);
             valor = itemView.findViewById(R.id.textAdapterValor);
             categoria = itemView.findViewById(R.id.textAdapterCategoria);
+            data = itemView.findViewById(R.id.textAdapterData);
         }
 
     }
