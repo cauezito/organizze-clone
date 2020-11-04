@@ -9,7 +9,10 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.List;
+import java.util.Locale;
 
 import br.com.cauezito.app.R;
 import br.com.cauezito.app.organizze.model.Movimentacao;
@@ -37,17 +40,22 @@ public class AdapterMovimentacao extends RecyclerView.Adapter<AdapterMovimentaca
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Movimentacao movimentacao = movimentacoes.get(position);
         String dia = "Dia " + movimentacao.getData().substring(0,2);
+        String valor = "R$ " + configuraValor(movimentacao.getValor());
 
         holder.titulo.setText(movimentacao.getDescricao());
-        holder.valor.setText(String.valueOf(movimentacao.getValor()));
+        holder.valor.setText(valor);
+
         holder.categoria.setText(movimentacao.getCategoria());
         holder.data.setText(dia);
 
         if (movimentacao.getTipo().equals(TipoEnum.D.getTipo())) {
             holder.valor.setTextColor(context.getResources().getColor(R.color.colorToolbarDespesa));
-            holder.valor.setText("R$"+movimentacao.getValor());
-            Log.d("tipo", TipoEnum.D.getTipo());
         }
+    }
+
+    private String configuraValor(Double valor) {
+        DecimalFormat decimalFormat = new DecimalFormat("#,##0.00", new DecimalFormatSymbols(new Locale("pt", "BR")));
+        return decimalFormat.format(valor);
     }
 
 
