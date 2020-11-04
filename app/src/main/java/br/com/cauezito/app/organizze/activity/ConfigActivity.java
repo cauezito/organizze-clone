@@ -6,6 +6,7 @@ import androidx.appcompat.widget.SwitchCompat;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
@@ -42,6 +43,7 @@ public class ConfigActivity extends AppCompatActivity {
                     banco.setValue(swFecharActv.isChecked());
                     Preferencias.fechaActivityAposNovaMovimentacao = swFecharActv.isChecked();
                 }
+                Toast.makeText(ConfigActivity.this, "Alterações salvas! :)", Toast.LENGTH_SHORT).show();
             }
         });
     }
