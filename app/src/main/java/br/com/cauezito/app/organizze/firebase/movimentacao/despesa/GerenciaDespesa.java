@@ -13,7 +13,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
-import br.com.cauezito.app.organizze.activity.DespesaActivity;
 import br.com.cauezito.app.organizze.firebase.config.FirebaseConfig;
 import br.com.cauezito.app.organizze.model.Movimentacao;
 import br.com.cauezito.app.organizze.model.Usuario;
@@ -51,7 +50,6 @@ public class GerenciaDespesa implements IGerenciaDespesa{
                         atualizaDespesa(despesaAtualizada);
 
                         Toast.makeText(despesaActivity.getBaseContext(), "Despesa salva", Toast.LENGTH_LONG).show();
-                        DespesaActivity.limpaCampos();
                     }
                 }
         ).addOnFailureListener(despesaActivity, new OnFailureListener() {

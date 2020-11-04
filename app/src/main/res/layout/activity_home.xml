@@ -25,17 +25,16 @@
         android:id="@+id/recyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calendarView"
-        app:layout_constraintVertical_bias="0.035" />
+        app:layout_constraintTop_toBottomOf="@+id/ivFiltro" />
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -111,7 +110,7 @@
             android:id="@+id/menu_despesa"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_baseline_money_off_24"
+            android:src="@drawable/bankruptcy"
             android:onClick="adicionaDespesa"
             fab:fab_size="normal"
             fab:fab_colorNormal="#FA3A3A"/>
@@ -120,7 +119,7 @@
             android:id="@+id/menu_entrada"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_baseline_attach_money_24"
+            android:src="@drawable/cofrinho"
             android:onClick="adicionaEntrada"
             fab:fab_size="normal"
             fab:fab_colorNormal="@color/colorToolbarEntrada"/>/>
@@ -157,5 +156,16 @@
             android:textSize="24sp" />
 
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/ivFiltro"
+        android:layout_width="32dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/calendarView"
+        fab:srcCompat="@drawable/ic_baseline_filter_list_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

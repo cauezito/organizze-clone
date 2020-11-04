@@ -1,8 +1,6 @@
 package br.com.cauezito.app.organizze.activity;
 
-
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,6 +25,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,30 +35,34 @@ import java.util.List;
 
 import br.com.cauezito.app.R;
 import br.com.cauezito.app.organizze.adapter.AdapterMovimentacao;
+import br.com.cauezito.app.organizze.config.Preferencias;
 import br.com.cauezito.app.organizze.firebase.config.FirebaseConfig;
 import br.com.cauezito.app.organizze.firebase.movimentacao.despesa.GerenciaDespesa;
 import br.com.cauezito.app.organizze.firebase.movimentacao.entrada.GerenciaEntrada;
 import br.com.cauezito.app.organizze.firebase.usuario.FirebaseAuthUsuario;
-import br.com.cauezito.app.organizze.firebase.usuario.FirebaseDatabaseUsuario;
 import br.com.cauezito.app.organizze.model.Movimentacao;
 import br.com.cauezito.app.organizze.model.TipoEnum;
 import br.com.cauezito.app.organizze.model.Usuario;
 import br.com.cauezito.app.organizze.utils.Base64Custom;
+import br.com.cauezito.app.organizze.utils.Valores;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity{
 
     private MaterialCalendarView calendario;
     private FirebaseAuthUsuario firebaseAuthUsuario;
     private FirebaseAuth autenticacao;
     private TextView tvNomeUsuario, tvSaldo;
+    private ImageView ivFiltro;
     private RecyclerView recyclerView;
     private Usuario usuario = new Usuario();
+    private String filtro = "data";
 
     private ValueEventListener valueEventListenerUsuario;
     private ValueEventListener valueEventListenerMovimentacao;
 
     private DatabaseReference usuarioRef;
     private DatabaseReference movimentacaoRef;
+    private DatabaseReference preferenciasRef;
 
     private AdapterMovimentacao adapterMovimentacao;
     private List<Movimentacao> movimentacoes = new ArrayList<>();
@@ -82,18 +85,43 @@ public class HomeActivity extends AppCompatActivity {
         tvSaldo = findViewById(R.id.tvSaldo);
         calendario = findViewById(R.id.calendarView);
         recyclerView = findViewById(R.id.recyclerView);
+        ivFiltro = findViewById(R.id.ivFiltro);
+
+        ivFiltro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recuperaMovimentacoes("valor");
+            }
+        });
 
         configuraRecyclerView();
         configuraCalendario();
         manipulaCalendario();
+        recuperaPreferencias();
         swipe();
+    }
+
+    private void recuperaPreferencias() {
+        preferenciasRef = FirebaseConfig.getDatabaseReference().child("config").child("preferencias").
+                child("fecharAposNovaMovimentacao");
+
+        preferenciasRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Preferencias.fechaActivityAposNovaMovimentacao = Boolean.parseBoolean(snapshot.getValue().toString());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        });
+
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         preencheInfoResumo();
-        recuperaMovimentacoes();
+        recuperaMovimentacoes(filtro);
     }
 
     private void swipe(){
@@ -144,7 +172,6 @@ public class HomeActivity extends AppCompatActivity {
                 alteraSaldo(movimentacao.getTipo() , movimentacao.getValor());
 
                 Toast.makeText(HomeActivity.this, "Movimentação excluída", Toast.LENGTH_SHORT).show();
-
             }
         });
 
@@ -173,31 +200,28 @@ public class HomeActivity extends AppCompatActivity {
 
 
 
-    private void recuperaMovimentacoes(){
+    private void recuperaMovimentacoes(String filtro){
         String emailUsuario = autenticacao.getCurrentUser().getEmail();
         String id = Base64Custom.codificaBase64(emailUsuario);
+
         movimentacaoRef = FirebaseConfig.getDatabaseReference().child("movimentacao").child(id).child(mesAnoSelecionado);
 
-        valueEventListenerMovimentacao = movimentacaoRef.addValueEventListener(new ValueEventListener() {
+        valueEventListenerMovimentacao = movimentacaoRef.orderByChild(filtro).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 movimentacoes.clear();
-
                 //percorre todas as movimentações
                 for(DataSnapshot dados: dataSnapshot.getChildren()){
                     Movimentacao movimentacao = dados.getValue(Movimentacao.class);
                     movimentacao.setId(dados.getKey());
                     movimentacoes.add(movimentacao);
                 }
-
                 //notifica que os dados foram atualizados
                 adapterMovimentacao.notifyDataSetChanged();
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
+            public void onCancelled(@NonNull DatabaseError databaseError) {}
         });
     }
 
@@ -220,8 +244,8 @@ public class HomeActivity extends AppCompatActivity {
                 DecimalFormat decimalFormat = new DecimalFormat("0.##");
                 String saldoTotal = decimalFormat.format(resumo);
 
-                tvNomeUsuario.setText("Olá, " + usuario.getNome() + "!");
-                tvSaldo.setText("R$" + saldoTotal);
+                tvNomeUsuario.setText("E aí, " + usuario.getNome() + "!");
+                tvSaldo.setText("R$ " + Valores.configuraValor(Double.parseDouble(saldoTotal)));
             }
 
             @Override
@@ -241,6 +265,9 @@ public class HomeActivity extends AppCompatActivity {
             case R.id.menuSair:
                 firebaseAuthUsuario.deslogaUsuario();
                 this.finish();
+                break;
+            case R.id.menuConfig:
+                startActivity(new Intent(this, ConfigActivity.class));
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -272,7 +299,7 @@ public class HomeActivity extends AppCompatActivity {
                 mesAnoSelecionado = String.valueOf((date.getMonth() + 1) + "" + date.getYear());
 
                 movimentacaoRef.removeEventListener(valueEventListenerMovimentacao);
-                recuperaMovimentacoes();
+                recuperaMovimentacoes(filtro);
             }
         });
     }
